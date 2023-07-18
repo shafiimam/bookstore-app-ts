@@ -21,7 +21,7 @@ export default function Navbar() {
     }
   ]
   return (
-    <Box p={4} bg={'brown'} boxShadow={"md"} position={"sticky"}>
+    <Box p={4} bg={'brown'} boxShadow={"md"} position={"fixed"} top={0} width={'100%'} zIndex={1}>
       <Box display={"flex"} justifyContent={"flex-end"} gap={'20px'} margin={'20px'}>
         {links.map((link) => (
           <Link key={link.name} to={link.path}>

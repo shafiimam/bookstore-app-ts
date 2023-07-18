@@ -3,3 +3,54 @@
 html {
   font-family: 'Raleway', sans-serif;
 }
+.hidden {
+  display: none;
+}
+.hero-item:hover .hidden{
+  display: block;
+}
+
+.custom-pagination ul {
+  gap: 5px;
+  border-radius: 5px;
+  list-style: none;
+  width: max-content;
+  display: flex;
+  margin: auto;
+  padding: 10px;
+  box-shadow: 0 3px 10px rgba(155, 151, 151, 0.2);
+}
+
+.custom-pagination ul li {
+  min-width: 30px;
+  text-align: center;
+  margin-right: 3px;
+  background: aliceblue;
+  font-weight: 500;
+  color: #808080 !important;
+}
+
+.custom-pagination ul li a {
+  padding: 5px;
+  display: block;
+}
+.custom-pagination ul li.next,
+.custom-pagination ul li.previous {
+  min-width: 30px;
+  font-weight: 900;
+}
+
+.custom-pagination ul li:hover {
+  background-color: rgb(230, 236, 242);
+}
+
+.custom-pagination ul li.selected {
+  background-color: #0289e5;
+  color: white !important;
+}
+
+.custom-pagination ul li.disabled {
+  cursor: none;
+  background-color: white;
+  color: gray;
+}

@@ -3,4 +3,6 @@ export type IBook = {
   author: string[];
   genre: string;
   publishedAt: Date;
+  coverImage: string;
+  _id: string;
 };
