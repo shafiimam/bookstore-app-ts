@@ -1,33 +1,30 @@
 import { useGetBooksQuery } from "@/app/features/Books/bookApi"
 import { useAppDispatch, useAppSelector } from "@/app/hooks"
-import { Box, Card, CardBody, Image, Spinner, Text } from "@chakra-ui/react"
+import { Box, Button, Card, CardBody, Image, Input, Select, Spinner, Text } from "@chakra-ui/react"
 import { useNavigate } from "react-router-dom"
 import React, { useState } from 'react';
 import ReactPaginate from "react-paginate";
-import { setPage } from "@/app/features/Books/bookSlice";
+import { setGenre, setPage, setSearchTerm } from "@/app/features/Books/bookSlice";
+import BookFilters from "@/components/BookFilter";
+import Search from "@/components/Search";
+import { IBook } from "@/types/globalTypes";
 export default function Books() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [itemOffset, setItemOffset] = useState(0);
   let itemsPerPage = 10;
-  let currentItems = [];
+  let currentItems: IBook[] = [];
   let pageCount = 0;
   const bookFilterState = useAppSelector(state => state.book)
   const { data: booksData, isLoading, isFetching } = useGetBooksQuery(bookFilterState)
   const handlePageClick = (event: any) => {
-    console.log('books data', event);
-    const newOffset = (event.selected * itemsPerPage) % booksData.meta.total!;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
-    setItemOffset(newOffset);
     dispatch(setPage(event.selected + 1));
   };
+
   let contentToRender = null;
-  if ((isLoading || isFetching) && !booksData) {
+  if (isLoading || isFetching) {
     contentToRender = <Box display={'flex'} justifyContent={'center'} p={5}><Spinner /></Box>
   }
-  if (!isLoading && booksData?.success) {
+  if (!isLoading && !isFetching && booksData?.success) {
     itemsPerPage = booksData.meta.limit;
     currentItems = booksData.data;
     pageCount = Math.ceil(booksData.meta.total / itemsPerPage);
@@ -39,36 +36,43 @@ export default function Books() {
               <CardBody>
                 <Image src={book.coverImage} height='500px' width='100%' borderRadius={'10px'} />
                 <Text fontSize={'20px'} letterSpacing={'1px'} color={'whiteAlpha.900'}>{book.title}</Text>
+                <Text>{book.genre}</Text>
                 <Text fontSize={'12px'}>{book.author} - {new Date(book.publishedAt).toLocaleDateString()}</Text>
               </CardBody>
             </Card>
           )}
+
         </Box>
-        <div
-          className="custom-pagination"
-          style={{ marginTop: '10px', marginBottom: '10px' }}
-        >
-          <ReactPaginate
-            breakLabel="..."
-            nextLabel="next >"
-            onPageChange={handlePageClick}
-            pageRangeDisplayed={5}
-            pageCount={pageCount}
-            previousLabel="< previous"
-            renderOnZeroPageCount={null}
-          />
-        </div>
+
       </Box>)
   }
 
   return (
-    <Box display={'flex'} flexDir={'row'} width={'100%'}>
-      <Box width={'20%'}>
-
-      </Box>
-      <Box width={'80%'}>
-        {contentToRender}
+    <Box position={'relative'} >
+      <Search currentItems={currentItems} isLoading={isLoading} isFetching={isFetching}/>
+      <Box display={'flex'} flexDir={'row'} width={'100%'} paddingTop={'80px'}>
+        <Box width={'20%'} borderRight={'1px solid white'}>
+          <BookFilters />
+        </Box>
+        <Box width={'80%'}>
+          {contentToRender}
+          <div
+            className="custom-pagination"
+            style={{ marginTop: '10px', marginBottom: '10px' }}
+          >
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel="next >"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={5}
+              pageCount={pageCount}
+              previousLabel="< previous"
+              renderOnZeroPageCount={null}
+            />
+          </div>
+        </Box>
       </Box>
     </Box>
+
   )
 }

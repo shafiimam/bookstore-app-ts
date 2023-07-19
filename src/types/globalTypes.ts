@@ -5,4 +5,5 @@ export type IBook = {
   publishedAt: Date;
   coverImage: string;
   _id: string;
+  reviews: string[];
 };
