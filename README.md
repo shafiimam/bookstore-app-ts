@@ -20,7 +20,7 @@ backend URL : https://bookstore-server-ts.vercel.app
 Clone the project
 
 ```bash
-  git clone https://link-to-project](https://github.com/shafiimam/bookstore-app-ts.git
+  git clone https://github.com/shafiimam/bookstore-app-ts.git
 ```
 
 Go to the project directory
