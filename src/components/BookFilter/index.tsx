@@ -13,7 +13,7 @@ export default function BookFilters() {
         {bookGenres.map((filter) => (
           <Button isDisabled={bookFilterState.genre === filter} variant={'outline'} key={filter} onClick={() => dispatch(setGenre(filter))}>{filter}</Button>
         ))}
-        <Button onClick={() => dispatch(setGenre(''))} bg={'blue.900'} isDisabled={bookFilterState.genre === ''}>Clear Filter</Button>
+        <Button onClick={() => dispatch(setGenre(''))} bg={'blue.900'} isDisabled={bookFilterState.genre === ''} color={'white'}>Clear Filter</Button>
       </Box>
     </Box>
   )

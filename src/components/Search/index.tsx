@@ -45,7 +45,7 @@ export default function Search({ currentItems, isFetching }: IProps) {
         }
         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
       />
-      <Button bg="brown" onClick={handleSearch}>
+      <Button bg="brown" onClick={handleSearch} color='white'>
         Search Book
       </Button>
       {currentItems.length === 0 && !isFetching && (
