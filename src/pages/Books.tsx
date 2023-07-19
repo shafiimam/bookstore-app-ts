@@ -34,7 +34,7 @@ export default function Books() {
             <Card background={'whiteAlpha.400'} key={book._id} width={'30%'} onClick={() => navigate(`/bookDetail/${book._id}`)} cursor={'pointer'} _hover={{ bg: 'whiteAlpha.200', transform: 'scale(1.01)', transition: 'all 0.2s' }} >
               <CardBody>
                 <Image src={book.coverImage} height='500px' width='100%' borderRadius={'10px'} />
-                <Text fontSize={'20px'} letterSpacing={'1px'} color={'whiteAlpha.900'}>{book.title}</Text>
+                <Text fontSize={'20px'} letterSpacing={'1px'}>{book.title}</Text>
                 <Text>{book.genre}</Text>
                 <Text fontSize={'12px'}>{book.author} - {new Date(book.publishedAt).toLocaleDateString()}</Text>
               </CardBody>
