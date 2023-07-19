@@ -24,7 +24,7 @@ export default function BookDetails() {
       variant: 'solid',
       title: 'Book Deleted',
     })
-    navigate(-1)
+    navigate('/books')
   }
 
   let contentToRender = null;

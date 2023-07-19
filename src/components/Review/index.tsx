@@ -1,4 +1,5 @@
 import { usePostReviewMutation } from '@/app/features/Books/bookApi'
+import { useAppSelector } from '@/app/hooks'
 import { Box, Button, Input, Text, useToast } from '@chakra-ui/react'
 type IProps = {
   reviews: string[]
@@ -12,9 +13,21 @@ export default function Reviews({ reviews }: IProps) {
   const [postReview, { isLoading, isSuccess }] = usePostReviewMutation();
   const toast = useToast();
 
+  const {user} = useAppSelector(state=> state.user);
+
   const handleSubmitReview = () => {
     setReviewInput('')
-    postReview({ review: reviewInput, id: id as string })
+    if(user.email){
+      postReview({ review: reviewInput, id: id as string })
+    } else {
+      toast({
+        title: 'Please Login To Submit Review',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        id: 'error',
+      })
+    }
   }
   if (isSuccess && !isLoading && !toast.isActive('success')) {
     toast({

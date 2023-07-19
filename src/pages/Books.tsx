@@ -1,10 +1,9 @@
 import { useGetBooksQuery } from "@/app/features/Books/bookApi"
 import { useAppDispatch, useAppSelector } from "@/app/hooks"
-import { Box, Button, Card, CardBody, Image, Input, Select, Spinner, Text } from "@chakra-ui/react"
+import { Box, Card, CardBody, Image, Spinner, Text } from "@chakra-ui/react"
 import { useNavigate } from "react-router-dom"
-import React, { useState } from 'react';
 import ReactPaginate from "react-paginate";
-import { setGenre, setPage, setSearchTerm } from "@/app/features/Books/bookSlice";
+import { setPage } from "@/app/features/Books/bookSlice";
 import BookFilters from "@/components/BookFilter";
 import Search from "@/components/Search";
 import { IBook } from "@/types/globalTypes";

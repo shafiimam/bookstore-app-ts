@@ -1,4 +1,5 @@
 import api from '@/app/api/apiSlice';
+import { IFormValues } from '@/pages/EditBook';
 import { IBook } from '@/types/globalTypes';
 
 type IBookFilter = {
@@ -54,7 +55,9 @@ const booksApi = api.injectEndpoints({
           return `/book?page=${page}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}&searchTerm=${searchTerm}&author=${author}`;
         if (genre)
           return `/book?page=${page}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}&searchTerm=${searchTerm}&genre=${genre}`;
-        return `/book?page=${page}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}&searchTerm=${searchTerm}`;
+        if (searchTerm)
+          return `/book?page=${page}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}&searchTerm=${searchTerm}`;
+        return `/book?page=${page}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
       },
       providesTags: ['books'],
     }),
@@ -72,7 +75,17 @@ const booksApi = api.injectEndpoints({
       },
       invalidatesTags: ['book'],
     }),
-    editBook: builder.mutation<IBook, { id: string; book: Partial<IBook> }>({
+    createBook: builder.mutation<IBookDetailsResponse, Partial<IBook>>({
+      query: (book) => {
+        return {
+          url: '/book',
+          method: 'POST',
+          body: book,
+        };
+      },
+      invalidatesTags: ['books', 'hero-books'],
+    }),
+    editBook: builder.mutation<IBook, { id: string; book: IFormValues }>({
       query: ({ id, book }) => {
         return {
           url: `/book/${id}`,
@@ -80,7 +93,7 @@ const booksApi = api.injectEndpoints({
           body: book,
         };
       },
-      invalidatesTags: ['book'],
+      invalidatesTags: ['book', 'books', 'hero-books'],
     }),
     deleteBook: builder.mutation<IBook, string>({
       query: (id) => {
@@ -98,6 +111,7 @@ export const {
   useGetBooksQuery,
   useGetBookDetailsQuery,
   usePostReviewMutation,
+  useCreateBookMutation,
   useEditBookMutation,
   useDeleteBookMutation,
 } = booksApi;

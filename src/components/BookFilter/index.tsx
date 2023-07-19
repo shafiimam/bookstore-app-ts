@@ -8,11 +8,12 @@ export default function BookFilters() {
   const bookFilterState = useAppSelector(state => state.book)
   return (
     <Box>
-      <Text textAlign={'center'}>Filter by genre</Text>
+      <Text textAlign={'center'} fontWeight={'bold'}>Filter by Fenre</Text>
       <Box display={'flex'} flexDir={'row'} gap={'10px'} margin={2} flexWrap={'wrap'} justifyContent={'center'}>
         {bookGenres.map((filter) => (
           <Button isDisabled={bookFilterState.genre === filter} variant={'outline'} key={filter} onClick={() => dispatch(setGenre(filter))}>{filter}</Button>
         ))}
+        <Button onClick={() => dispatch(setGenre(''))} bg={'blue.900'} isDisabled={bookFilterState.genre === ''}>Clear Filter</Button>
       </Box>
     </Box>
   )
